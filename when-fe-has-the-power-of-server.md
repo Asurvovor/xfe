@@ -3,7 +3,7 @@
 ### Fetch API ###
 传统的 XMLHttpRequest，出了两个版本，在 XHR2.0 中引入了跨源请求、上传进度事件和对二进制数据的支持等，这些 API 的增强让 AJAX 可以很方便地与 HTML5 API 相结合，例如 File System API、Web Audio API、WebGL 等，让前端对音视频的处理和富客户端元素的处理更加有亲和力。
 作为一个与后端交互的通道，XHR2.0 的接口封装依然过于底层。看看 jQuery 对 AJAX 的封装，再回头看看我们今天要介绍的 Fetch API，不得不惊叹，浏览器已经在应用层面思考着功能的拓展，依托着 Promise 产出了十分友好的新一套接口。
-以前我们使用 XHR 去请求一个资源，会这么做：我要说话
+以前我们使用 XHR 去请求一个资源，会这么做：
 
 ```javascript
 // Just getting XHR is a mess!
@@ -131,7 +131,11 @@ caches.open('test-cache').then(function(cache) {
 
 ### 拓展阅读 ###
 http://www.html5rocks.com/zh/tutorials/file/xhr2/
+
 https://www.web-tinker.com/article/20882.html
+
 https://davidwalsh.name/fetch
+
 https://developer.mozilla.org/en-US/docs/Web/API/Cache
+
 https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
