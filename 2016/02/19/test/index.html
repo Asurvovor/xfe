@@ -60,7 +60,7 @@
 <meta name="description" content="公式书写注意
 下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;em&amp;gt;xxx&amp;lt;\/em&amp;gt;
 
-举例$$\frac{\partial u}{\partial t}= h^2 \left( \frac{\partial^2 u}{\partial x^2} +\frac{\partial^2 u}{\partial y^2} +\frac{\">
+举例1234$$\frac&amp;#123;\partial u&amp;#125;&amp;#123;\partial t&amp;#125;= h^2 \left( \frac&amp;#123;\partial^2 u&amp;#125;&amp;#123;\partial x^2&amp;#125;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ADMM调研-v0.1（测试公式）">
 <meta property="og:url" content="http://sinaad.github.io/xfe/2016/02/19/test/index.html">
@@ -68,14 +68,14 @@
 <meta property="og:description" content="公式书写注意
 下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;em&amp;gt;xxx&amp;lt;\/em&amp;gt;
 
-举例$$\frac{\partial u}{\partial t}= h^2 \left( \frac{\partial^2 u}{\partial x^2} +\frac{\partial^2 u}{\partial y^2} +\frac{\">
-<meta property="og:updated_time" content="2016-02-19T15:08:29.000Z">
+举例1234$$\frac&amp;#123;\partial u&amp;#125;&amp;#123;\partial t&amp;#125;= h^2 \left( \frac&amp;#123;\partial^2 u&amp;#125;&amp;#123;\partial x^2&amp;#125;">
+<meta property="og:updated_time" content="2016-02-19T15:12:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ADMM调研-v0.1（测试公式）">
 <meta name="twitter:description" content="公式书写注意
 下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;em&amp;gt;xxx&amp;lt;\/em&amp;gt;
 
-举例$$\frac{\partial u}{\partial t}= h^2 \left( \frac{\partial^2 u}{\partial x^2} +\frac{\partial^2 u}{\partial y^2} +\frac{\">
+举例1234$$\frac&amp;#123;\partial u&amp;#125;&amp;#123;\partial t&amp;#125;= h^2 \left( \frac&amp;#123;\partial^2 u&amp;#125;&amp;#123;\partial x^2&amp;#125;">
 
 
 
@@ -310,9 +310,13 @@
         <h3 id="公式书写注意"><a href="#公式书写注意" class="headerlink" title="公式书写注意"></a>公式书写注意</h3><ol>
 <li>下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&lt;em&gt;xxx&lt;\/em&gt;</li>
 </ol>
-<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>$$\frac{\partial u}{\partial t}<br>= h^2 \left( \frac{\partial^2 u}{\partial x^2} +<br>\frac{\partial^2 u}{\partial y^2} +<br>\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$$\frac&#123;\partial u&#125;&#123;\partial t&#125;</span><br><span class="line">= h^<span class="number">2</span> \left( \frac&#123;\partial^<span class="number">2</span> u&#125;&#123;\partial x^<span class="number">2</span>&#125; +</span><br><span class="line">\frac&#123;\partial^<span class="number">2</span> u&#125;&#123;\partial y^<span class="number">2</span>&#125; +</span><br><span class="line">\frac&#123;\partial^<span class="number">2</span> u&#125;&#123;\partial z^<span class="number">2</span>&#125;\right)$$</span><br></pre></td></tr></table></figure>
+<p>$$\frac{\partial u}{\partial t}<br>= h^2 \left( \frac{\partial^2 u}{\partial x^2} +<br>\frac{\partial^2 u}{\partial y^2} +<br>\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">\mathcal&#123;L&#125;(x,\beta) = \sum_&#123;i=<span class="number">1</span>&#125;^&#123;m&#125; \mathcal&#123;L&#125;\_i(x\_i, \beta) = \sum_&#123;i=<span class="number">1</span>&#125;^&#123;m&#125; \left(f\_i(x\_i) + \beta^T A\_i x\_i - \frac&#123;<span class="number">1</span>&#125;&#123;N&#125; \beta^T b \right)</span><br><span class="line">\qquad(<span class="number">1.7</span>)</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
 <p>$$<br>\mathcal{L}(x,\beta) = \sum_{i=1}^{m} \mathcal{L}_i(x_i, \beta) = \sum_{i=1}^{m} \left(f_i(x_i) + \beta^T A_i x_i - \frac{1}{N} \beta^T b \right)<br>\qquad(1.7)<br>$$</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">\begin&#123;align&#125;</span><br><span class="line">&amp; \min_&#123;x&#125; \quad f(x) \\\\</span><br><span class="line">&amp; s.t. \; Ax=b</span><br><span class="line">\end&#123;align&#125;  \qquad(<span class="number">1.1</span>)</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
 <p>$$<br>\begin{align}<br>&amp; \min_{x} \quad f(x) \\<br>&amp; s.t. \; Ax=b<br>\end{align}  \qquad(1.1)<br>$$</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">    \mathcal&#123;L&#125;(x,\beta) = f(x) + \beta^T (Ax-b) \qquad(<span class="number">1.2</span>)</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
 <p>$$<br>    \mathcal{L}(x,\beta) = f(x) + \beta^T (Ax-b) \qquad(1.2)<br>$$</p>
 
       
@@ -825,7 +829,7 @@
       });
   </script>
 
-  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
   
