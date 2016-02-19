@@ -219,6 +219,15 @@
 
     
     
+      
+      
+        
+        
+        
+      
+
+      
+    
 
     
       
@@ -310,13 +319,12 @@
       
         
           
-          1. 约束优化问题一般解决方案1.1. Dual Ascent（对偶上升法）对于凸函数的优化问题，对偶上升法对偶上升法核心思想就是引入一个对偶变量，然后利用交替优化的思路，使得两者同时达到optimal。
-一个典型的等式约束最优化问题，形式化表示如下：
-$$\begin{align*}
-&amp; \min_{x} \quad f(x) \\
-&amp; s.t. \; Ax=b
-\end{align*}        \qquad(1.1)$$
-目标函数是\(f(x)\)，\(x=(x_1,x
+          公式书写注意
+
+下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成xxx
+
+$$\frac{\partial u}{\partial t}= h^2 \left( \frac{\partial^2 u}{\partial x^2} +\frac{\partial^2 u}{\partial y^2} +\frac{\partial^2 u}{\partial z^2}\right)$$
+$$\mathcal{L}(x,\beta) = \sum_{i=1}^{
           ...
 
           <div class="post-more-link text-center">
@@ -642,7 +650,7 @@ Fetch API传统的 XMLH
           
             <div class="site-state-item site-state-tags">
               <a href="/xfe/tags">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -811,61 +819,39 @@ Fetch API传统的 XMLH
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
       tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        displayMath: [ ['$$','$$'], ['\[','\]'] ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
       }
     });
   </script>
 
   <script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-      var all = MathJax.Hub.getAllJax(), i;
-      for (i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';
-      }
-    });
+      MathJax.Hub.Config({
+        tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+      MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+        //  do something with the error.  message[2] is the Error object that records the problem.
+        console.log(message);
+      });
   </script>
 
-  
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+  </script>
+
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
   
   
 
 
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 </body>
 </html>
