@@ -5,7 +5,7 @@
   <link href="/xfe/atom.xml" rel="self"/>
   
   <link href="http://sinaad.github.io/xfe/"/>
-  <updated>2016-02-19T15:05:23.000Z</updated>
+  <updated>2016-02-19T15:07:30.000Z</updated>
   <id>http://sinaad.github.io/xfe/</id>
   
   <author>
@@ -20,13 +20,12 @@
     <link href="http://sinaad.github.io/xfe/2016/02/19/test/"/>
     <id>http://sinaad.github.io/xfe/2016/02/19/test/</id>
     <published>2016-02-19T08:04:15.000Z</published>
-    <updated>2016-02-19T15:05:23.000Z</updated>
+    <updated>2016-02-19T15:07:30.000Z</updated>
     
-    <content type="html">&lt;p&gt;公式书写注意&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&lt;em&gt;xxx&lt;em&gt;&lt;/em&gt;&lt;/em&gt;&lt;/li&gt;
+    <content type="html">&lt;h3 id=&quot;公式书写注意&quot;&gt;&lt;a href=&quot;#公式书写注意&quot; class=&quot;headerlink&quot; title=&quot;公式书写注意&quot;&gt;&lt;/a&gt;公式书写注意&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;em&amp;gt;xxx&amp;lt;\/em&amp;gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;$$\frac{\partial u}{\partial t}&lt;br&gt;= h^2 \left( \frac{\partial^2 u}{\partial x^2} +&lt;br&gt;\frac{\partial^2 u}{\partial y^2} +&lt;br&gt;\frac{\partial^2 u}{\partial z^2}\right)$$&lt;/p&gt;
+&lt;h3 id=&quot;举例&quot;&gt;&lt;a href=&quot;#举例&quot; class=&quot;headerlink&quot; title=&quot;举例&quot;&gt;&lt;/a&gt;举例&lt;/h3&gt;&lt;p&gt;$$\frac{\partial u}{\partial t}&lt;br&gt;= h^2 \left( \frac{\partial^2 u}{\partial x^2} +&lt;br&gt;\frac{\partial^2 u}{\partial y^2} +&lt;br&gt;\frac{\partial^2 u}{\partial z^2}\right)$$&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;\mathcal{L}(x,\beta) = \sum_{i=1}^{m} \mathcal{L}_i(x_i, \beta) = \sum_{i=1}^{m} \left(f_i(x_i) + \beta^T A_i x_i - \frac{1}{N} \beta^T b \right)&lt;br&gt;\qquad(1.7)&lt;br&gt;$$&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;\begin{align}&lt;br&gt;&amp;amp; \min_{x} \quad f(x) \\&lt;br&gt;&amp;amp; s.t. \; Ax=b&lt;br&gt;\end{align}  \qquad(1.1)&lt;br&gt;$$&lt;/p&gt;
 &lt;p&gt;$$&lt;br&gt;    \mathcal{L}(x,\beta) = f(x) + \beta^T (Ax-b) \qquad(1.2)&lt;br&gt;$$&lt;/p&gt;
@@ -34,11 +33,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;公式书写注意&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&lt;em&gt;xxx&lt;em&gt;&lt;/em&gt;&lt;/em&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;$$\frac{\partial u}{\partial t}&lt;br&gt;= h
+      &lt;h3 id=&quot;公式书写注意&quot;&gt;&lt;a href=&quot;#公式书写注意&quot; class=&quot;headerlink&quot; title=&quot;公式书写注意&quot;&gt;&lt;/a&gt;公式书写注意&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;e
     
     </summary>
     
