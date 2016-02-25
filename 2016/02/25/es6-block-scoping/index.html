@@ -67,7 +67,7 @@ Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的
 <meta property="og:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
 这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。
 Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的主流环境中) 中，变量只能被闭包在执行上下文的变量环境中。实际上，这意味着变量（通过var语句声明）是通过他们所">
-<meta property="og:updated_time" content="2016-02-25T16:12:04.000Z">
+<meta property="og:updated_time" content="2016-02-25T16:14:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6介绍：块作用域">
 <meta name="twitter:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
@@ -308,7 +308,7 @@ Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的
 <p>这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。</p>
 <h2 id="Let声明"><a href="#Let声明" class="headerlink" title="Let声明"></a>Let声明</h2><p>在ES5(当前ECMAScript规范的主要版本，他被实现在所有的主流环境中) 中，变量只能被闭包在执行上下文的变量环境中。实际上，这意味着变量（通过var语句声明）是通过他们所在的执行上下文来访问：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// undefined (not a ReferenceError)</span></span><br><span class="line">    <span class="built_in">console</span>.log(z); <span class="comment">// ReferenceError: z is not defined</span></span><br><span class="line">    <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        <span class="keyword">var</span> y = <span class="number">5</span>; <span class="comment">// This declaration is hoisted</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这归结于一个众所周知的概念叫“hoisting（提升）”。当一个函数被调用时，定义绑定初始化算法将函数代码中的每一个变量声明和函数声明绑定在变量环境中。如果你想了解更多关于JavaScript中hoisting的知识，我建议你去读读Ben Cherry的文章。</p>
+<p>这归结于一个众所周知的概念叫“hoisting（提升）”。当一个函数被调用时，定义绑定初始化算法将函数代码中的每一个变量声明和函数声明以绑定的方式在变量环境中创建。如果你想了解更多关于JavaScript中hoisting的知识，我建议你去读读Ben Cherry的文章。</p>
 <p>ES6的变量和函数声明依然有这样的表现（这对于向后兼容是一件好事）。而且，关于let关键字的介绍给了我们更多的灵活性：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// ReferenceError: y is not defined</span></span><br><span class="line">    <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        <span class="keyword">let</span> y = <span class="number">5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过let语句声明的变量被绑定在当前执行上下文的词法环境，而不是在变量环境中。ES6规范对于块语句的一个改变是每一个块都有他自己的词法环境。在上面的例子中，当块（if语句的内容）被执行的时候会创建一个新的词法环境。当let语句被执行的时候会往这个词法环境中添加一个对应的绑定，并且它无法被外部的词法环境（函数声明的这个词法环境）访问到。</p>
