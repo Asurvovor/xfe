@@ -39,7 +39,7 @@
 <link href="/xfe/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="algo,hexo-math,latex,mathjax," />
+  <meta name="keywords" content="blockscoping,es6," />
 
 
 
@@ -57,25 +57,19 @@
 
 
 
-<meta name="description" content="公式书写注意
-下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;em&amp;gt;xxx&amp;lt;\/em&amp;gt;
-
-举例1234$$\frac&amp;#123;\partial u&amp;#125;&amp;#123;\partial t&amp;#125;= h^2 \left( \frac&amp;#123;\partial^2 u&amp;#125;&amp;#123;\partial x^2&amp;#125;">
+<meta name="description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
+This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo+mathjax生成公式测试">
-<meta property="og:url" content="http://sinaad.github.io/xfe/2016/02/19/test/index.html">
+<meta property="og:title" content="ES6介绍：块作用域">
+<meta property="og:url" content="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/index.html">
 <meta property="og:site_name" content="{XFE.js}">
-<meta property="og:description" content="公式书写注意
-下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;em&amp;gt;xxx&amp;lt;\/em&amp;gt;
-
-举例1234$$\frac&amp;#123;\partial u&amp;#125;&amp;#123;\partial t&amp;#125;= h^2 \left( \frac&amp;#123;\partial^2 u&amp;#125;&amp;#123;\partial x^2&amp;#125;">
-<meta property="og:updated_time" content="2016-02-19T15:13:25.000Z">
+<meta property="og:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
+This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read">
+<meta property="og:updated_time" content="2016-02-25T10:44:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo+mathjax生成公式测试">
-<meta name="twitter:description" content="公式书写注意
-下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&amp;lt;em&amp;gt;xxx&amp;lt;\/em&amp;gt;
-
-举例1234$$\frac&amp;#123;\partial u&amp;#125;&amp;#123;\partial t&amp;#125;= h^2 \left( \frac&amp;#123;\partial^2 u&amp;#125;&amp;#123;\partial x^2&amp;#125;">
+<meta name="twitter:title" content="ES6介绍：块作用域">
+<meta name="twitter:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
+This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read">
 
 
 
@@ -93,7 +87,7 @@
   };
 </script>
 
-  <title> hexo+mathjax生成公式测试 | {XFE.js} </title>
+  <title> ES6介绍：块作用域 | {XFE.js} </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -243,7 +237,7 @@
             
             
               
-                hexo+mathjax生成公式测试
+                ES6介绍：块作用域
               
             
           </h1>
@@ -255,8 +249,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-19T16:04:15+08:00" content="2016-02-19">
-              2016-02-19
+            <time itemprop="dateCreated" datetime="2016-02-25T18:40:47+08:00" content="2016-02-25">
+              2016-02-25
             </time>
           </span>
 
@@ -269,8 +263,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/xfe/categories/other/" itemprop="url" rel="index">
-                    <span itemprop="name">other</span>
+                  <a href="/xfe/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
                   </a>
                 </span>
 
@@ -285,8 +279,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/xfe/2016/02/19/test/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/19/test/" itemprop="commentsCount"></span>
+                <a href="/xfe/2016/02/25/es6-block-scoping/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/25/es6-block-scoping/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -307,17 +301,33 @@
       
 
       
-        <h3 id="公式书写注意"><a href="#公式书写注意" class="headerlink" title="公式书写注意"></a>公式书写注意</h3><ol>
-<li>下标要用转义字符，\_，因为在markdown里面被两个_包围起来的字符会最终被编译成&lt;em&gt;xxx&lt;\/em&gt;</li>
-</ol>
-<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$$\frac&#123;\partial u&#125;&#123;\partial t&#125;</span><br><span class="line">= h^<span class="number">2</span> \left( \frac&#123;\partial^<span class="number">2</span> u&#125;&#123;\partial x^<span class="number">2</span>&#125; +</span><br><span class="line">\frac&#123;\partial^<span class="number">2</span> u&#125;&#123;\partial y^<span class="number">2</span>&#125; +</span><br><span class="line">\frac&#123;\partial^<span class="number">2</span> u&#125;&#123;\partial z^<span class="number">2</span>&#125;\right)$$</span><br></pre></td></tr></table></figure>
-<p>$$\frac{\partial u}{\partial t}<br>= h^2 \left( \frac{\partial^2 u}{\partial x^2} +<br>\frac{\partial^2 u}{\partial y^2} +<br>\frac{\partial^2 u}{\partial z^2}\right)$$</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">\mathcal&#123;L&#125;(x,\beta) = \sum_&#123;i=<span class="number">1</span>&#125;^&#123;m&#125; \mathcal&#123;L&#125;\_i(x\_i, \beta) = \sum_&#123;i=<span class="number">1</span>&#125;^&#123;m&#125; \left(f\_i(x\_i) + \beta^T A\_i x\_i - \frac&#123;<span class="number">1</span>&#125;&#123;N&#125; \beta^T b \right)</span><br><span class="line">\qquad(<span class="number">1.7</span>)</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
-<p>$$<br>\mathcal{L}(x,\beta) = \sum_{i=1}^{m} \mathcal{L}_i(x_i, \beta) = \sum_{i=1}^{m} \left(f_i(x_i) + \beta^T A_i x_i - \frac{1}{N} \beta^T b \right)<br>\qquad(1.7)<br>$$</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">\begin&#123;align&#125;</span><br><span class="line">&amp; \min_&#123;x&#125; \quad f(x) \\\\</span><br><span class="line">&amp; s.t. \; Ax=b</span><br><span class="line">\end&#123;align&#125;  \qquad(<span class="number">1.1</span>)</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
-<p>$$<br>\begin{align}<br>&amp; \min_{x} \quad f(x) \\<br>&amp; s.t. \; Ax=b<br>\end{align}  \qquad(1.1)<br>$$</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">    \mathcal&#123;L&#125;(x,\beta) = f(x) + \beta^T (Ax-b) \qquad(<span class="number">1.2</span>)</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
-<p>$$<br>    \mathcal{L}(x,\beta) = f(x) + \beta^T (Ax-b) \qquad(1.2)<br>$$</p>
+        <p>本文根据 <a href="http://dev.venntro.com/2013/09/es6-part-2/" target="_blank" rel="external">http://dev.venntro.com/2013/09/es6-part-2/</a> 翻译</p>
+<p>This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read the first part if you missed it.</p>
+<h2 id="Let-Declarations"><a href="#Let-Declarations" class="headerlink" title="Let Declarations"></a>Let Declarations</h2><p>In ES5 (the current major revision of the ECMAScript specification, available in all modern environments) variables can only be scoped to the variable environment of an execution context. In practice, this means variables (declared with a var statement) are accessible throughout the execution context in which they appear:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// undefined (not a ReferenceError)</span></span><br><span class="line">    <span class="built_in">console</span>.log(z); <span class="comment">// ReferenceError: z is not defined</span></span><br><span class="line">    <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        <span class="keyword">var</span> y = <span class="number">5</span>; <span class="comment">// This declaration is hoisted</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>This is due to a concept commonly known as “hoisting”. When a function is invoked the declaration binding instantiation algorithm dictates that a binding is created in the variable environment for each variable and function declaration within its code. If you would like to learn more about hoisting in JavaScript I recommend reading Ben Cherry’s article on the subject.</p>
+<p>In ES6 variable and function declarations continue to behave in this manner (which is a good thing for backwards compatability). However, the introduction of the let keyword gives us some more flexibility:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// ReferenceError: y is not defined</span></span><br><span class="line">    <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        <span class="keyword">let</span> y = <span class="number">5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Variables declared with a let statement are created as bindings on the lexical environment, rather than the variable environment, of the current execution context. A change to the specification of block statements in ES6 means that each block has its own lexical environment. In the above example, a new lexical environment is created when the block (the body of the if statement) is evaluated. When the let statement is evaluated a binding is added to this lexical environment and is innaccessible from the outer lexical environment (that of the function declaration itself).</p>
+<p>We can see how new lexical environments for blocks are created in detail in the ES6 draft specification (ES6 §13.1.2):</p>
+<p>Block : { StatementList }</p>
+<ul>
+<li>Let oldEnv be the running execution context’s LexicalEnvironment.</li>
+<li>Let blockEnv be the result of calling NewDeclarativeEnvironment passing oldEnv as the argument.</li>
+<li>Perform Block Declaration Instantiation using StatementList and blockEnv.</li>
+<li>Set the running execution context’s LexicalEnvironment to blockEnv.</li>
+</ul>
+<p>It’s worth noting that let declarations are not hoisted in the same way as var declarations. Attempting to reference an identifier created as part of a let declaration before the declaration itself has been evaluated will result in an error:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(x); <span class="comment">// ReferenceError: x is not defined</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>You can use let declarations anywhere you can use a var declaration. Of particular interest is the usage in loop initialisers. When using a var statement as a loop initialiser the declaration will be hoisted as discussed above and the variable will be accessible throughout the execution context in which it appears. This can be a common cause of confusion for beginners, especially those coming from a language that does implement block scoping. With the addition of the let declaration we can ensure our loop counter is only accessible within its block:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i); <span class="comment">// Prints 0 to 9</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">// ReferenceError: i is not defined</span></span><br></pre></td></tr></table></figure>
+<h2 id="Const-Declarations"><a href="#Const-Declarations" class="headerlink" title="Const Declarations"></a>Const Declarations</h2><p>ES6 introduces another type of declaration, const (ES6 § 13.2.1). It has the same block scoped binding semantics as let but its value is a read-only constant. They must have an initialiser, unlike let and var declarations:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x; <span class="comment">// x === undefined</span></span><br><span class="line"><span class="keyword">const</span> z; <span class="comment">// SyntaxError: const declarations must have an initializer</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> y = <span class="number">10</span>; <span class="comment">// y === 10</span></span><br><span class="line"></span><br><span class="line">y = <span class="number">20</span>; <span class="comment">// SyntaxError: Assignment to constant variable</span></span><br></pre></td></tr></table></figure>
+<p>Note that the const keyword has been supported by numerous engines for some time now, but with slightly different semantics to the ES6 spec. One of the main differences is that constants are currently declared in function scope, rather than block scope. Attempting to assign a new value to a constant fails, but does not produce an error in all engines.</p>
+<h2 id="Function-Declarations-in-Blocks"><a href="#Function-Declarations-in-Blocks" class="headerlink" title="Function Declarations in Blocks"></a>Function Declarations in Blocks</h2><p>In ES5 function declarations were not allowed to appear in blocks. Various implementations allowed this anyway, leading to code that behaves differently across those implementations (ES5 §12):</p>
+<p>Several widely used implementations of ECMAScript are known to support the use of FunctionDeclaration as a Statement. However there are significant and irreconcilable variations among the implementations in the semantics applied to such FunctionDeclarations.<br>ES6 proposes to explictly allow the use of function declarations within blocks, again following much the same semantics as let and const declarations:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x) &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Do stuff</span></span><br><span class="line">    &#125;</span><br><span class="line">    someObj.method = fn;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(fn); <span class="comment">// ReferenceError: fn is not defined</span></span><br></pre></td></tr></table></figure>
+<p>However, there does appear to have been some debate around whether or not it will be possible to implement this so I’m unclear as to whether this will make it into the final spec or not. If you’re interested in discussions around these difficulties the Mozilla and WebKit issues are good places to look.</p>
+<p>Come back soon for the next part, where we’ll have a look at destructuring, probably one of the most talked-about ES6 features. Follow us on twitter to be notified when it’s posted, and don’t forget we’re hiring…</p>
 
       
     </div>
@@ -326,13 +336,9 @@
       
         <div class="post-tags">
           
-            <a href="/xfe/tags/algo/" rel="tag">#algo</a>
+            <a href="/xfe/tags/blockscoping/" rel="tag">#blockscoping</a>
           
-            <a href="/xfe/tags/hexo-math/" rel="tag">#hexo-math</a>
-          
-            <a href="/xfe/tags/latex/" rel="tag">#latex</a>
-          
-            <a href="/xfe/tags/mathjax/" rel="tag">#mathjax</a>
+            <a href="/xfe/tags/es6/" rel="tag">#es6</a>
           
         </div>
       
@@ -341,17 +347,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/xfe/2016/02/18/create-team-blog-with-hexo-and-github/" rel="next" title="使用hexo和github创建团队博客">
-                <i class="fa fa-chevron-left"></i> 使用hexo和github创建团队博客
+              <a href="/xfe/2016/02/19/test/" rel="next" title="hexo+mathjax生成公式测试">
+                <i class="fa fa-chevron-left"></i> hexo+mathjax生成公式测试
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/xfe/2016/02/25/es6-block-scoping/" rel="prev" title="ES6介绍：块作用域">
-                ES6介绍：块作用域 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -366,10 +368,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/02/19/test/"
-     data-title="hexo+mathjax生成公式测试"
+        <div class="ds-share flat" data-thread-key="2016/02/25/es6-block-scoping/"
+     data-title="ES6介绍：块作用域"
      data-content=""
-     data-url="http://sinaad.github.io/xfe/2016/02/19/test/">
+     data-url="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -396,8 +398,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/02/19/test/"
-           data-title="hexo+mathjax生成公式测试" data-url="http://sinaad.github.io/xfe/2016/02/19/test/">
+      <div class="ds-thread" data-thread-key="2016/02/25/es6-block-scoping/"
+           data-title="ES6介绍：块作用域" data-url="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/">
       </div>
     
   </div>
@@ -517,7 +519,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#公式书写注意"><span class="nav-number">1.</span> <span class="nav-text">公式书写注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举例"><span class="nav-number">2.</span> <span class="nav-text">举例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Let-Declarations"><span class="nav-number">1.</span> <span class="nav-text">Let Declarations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Const-Declarations"><span class="nav-number">2.</span> <span class="nav-text">Const Declarations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Declarations-in-Blocks"><span class="nav-number">3.</span> <span class="nav-text">Function Declarations in Blocks</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
