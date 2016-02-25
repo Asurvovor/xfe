@@ -5,7 +5,7 @@
   <link href="/xfe/atom.xml" rel="self"/>
   
   <link href="http://sinaad.github.io/xfe/"/>
-  <updated>2016-02-25T16:18:33.000Z</updated>
+  <updated>2016-02-25T16:24:02.000Z</updated>
   <id>http://sinaad.github.io/xfe/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/"/>
     <id>http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/</id>
     <published>2016-02-25T10:40:47.000Z</published>
-    <updated>2016-02-25T16:18:33.000Z</updated>
+    <updated>2016-02-25T16:24:02.000Z</updated>
     
     <content type="html">&lt;p&gt;本文根据 &lt;a href=&quot;http://dev.venntro.com/2013/09/es6-part-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dev.venntro.com/2013/09/es6-part-2/&lt;/a&gt; 翻译&lt;/p&gt;
 &lt;p&gt;这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。&lt;/p&gt;
@@ -30,12 +30,15 @@
 &lt;p&gt;ES6的变量和函数声明依然有这样的表现（这对于向后兼容是一件好事）。不仅如此，接下来要介绍的let关键字给了我们更多的灵活性：&lt;/p&gt;
 &lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;example&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;x&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(y); &lt;span class=&quot;comment&quot;&gt;// ReferenceError: y is not defined&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (x) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; y = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;通过let语句声明的变量被绑定在当前执行上下文的词法环境，而不是在变量环境中。ES6规范对于块语句的一个改变是每一个块都有他自己的词法环境。在上面的例子中，当块（if语句的内容）被执行的时候会创建一个新的词法环境。当let语句被执行的时候会往这个词法环境中添加一个对应的绑定，并且它无法被外部的词法环境（函数声明的这个词法环境）访问到。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里应该就是没有hoisting和所谓暂时性死区（TDZ）产生的原因&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;在ES6草案中我们能找到针对块的这个新的词法环境的创建细节：&lt;/p&gt;
 &lt;p&gt;Block : { StatementList }&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;使oldEnv为当前执行上下文的词法环境。&lt;/li&gt;
 &lt;li&gt;使blockEnv为通过传递oldEnv为参数调用NewDeclarativeEnvironment方法获得的声明式环境记录项&lt;/li&gt;
-&lt;li&gt;执行块的定义初始化使用语句列表和blockEnv(这句意味着？)&lt;/li&gt;
+&lt;li&gt;执行块的定义初始化使用语句列表和blockEnv(这句意味着？翻译有问题？)&lt;/li&gt;
 &lt;li&gt;设置执行上下文的词法环境为blockEnv.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;值得注意的是let声明不会像var声明一样被提升。试图在let声明被执行之前引用一个标识符会导致错误：&lt;/p&gt;
