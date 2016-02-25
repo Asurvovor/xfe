@@ -5,7 +5,7 @@
   <link href="/xfe/atom.xml" rel="self"/>
   
   <link href="http://sinaad.github.io/xfe/"/>
-  <updated>2016-02-25T16:26:57.000Z</updated>
+  <updated>2016-02-25T16:43:12.000Z</updated>
   <id>http://sinaad.github.io/xfe/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/"/>
     <id>http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/</id>
     <published>2016-02-25T10:40:47.000Z</published>
-    <updated>2016-02-25T16:26:57.000Z</updated>
+    <updated>2016-02-25T16:43:12.000Z</updated>
     
     <content type="html">&lt;p&gt;本文根据 &lt;a href=&quot;http://dev.venntro.com/2013/09/es6-part-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dev.venntro.com/2013/09/es6-part-2/&lt;/a&gt; 翻译&lt;/p&gt;
 &lt;p&gt;这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。&lt;/p&gt;
@@ -48,6 +48,9 @@
 &lt;h2 id=&quot;Const声明&quot;&gt;&lt;a href=&quot;#Const声明&quot; class=&quot;headerlink&quot; title=&quot;Const声明&quot;&gt;&lt;/a&gt;Const声明&lt;/h2&gt;&lt;p&gt;ES6介绍了另外一个声明类型，const(ES6 § 13.2.1). 他有和let一样的块作用域绑定语义,但是他的值是一个只读的常量。不同于let和var声明，他们必须初始化：&lt;/p&gt;
 &lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; x; &lt;span class=&quot;comment&quot;&gt;// x === undefined&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; z; &lt;span class=&quot;comment&quot;&gt;// SyntaxError: const declarations must have an initializer&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; y = &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;// y === 10&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;y = &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;// SyntaxError: Assignment to constant variable&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;注意const关键字被很多引擎支持有一段时间了，但是在ES6规范中有一些略微的不同。一个主要的差别是常量当前被声明在函数作用域而不是块作用域（不是块作用域么，翻译有问题？）。企图为一个常量赋值会导致失败，但是在所有的引擎中都不会导致报错。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;译者：这里估计是因为文章比较老，但是我觉得const最大的问题应该在于对于引用类型，比如对象的const上，这里的应该分歧较多&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&quot;块中的函数声明&quot;&gt;&lt;a href=&quot;#块中的函数声明&quot; class=&quot;headerlink&quot; title=&quot;块中的函数声明&quot;&gt;&lt;/a&gt;块中的函数声明&lt;/h2&gt;&lt;p&gt;ES5中函数声明不允许出现在块中。然而很多实现允许这样，导致了在这些实现中有不同的行为（ES5 §12）：&lt;/p&gt;
 &lt;p&gt;目前广泛使用的几种ECMAScript的实现是支持把函数声明作为一个语句的。然而这些实现中对这样函数声明的语法应用上有着重大的，不可调和的差异。&lt;/p&gt;
 &lt;p&gt;ES6提议明确允许函数声明出现在块中，也遵守和let，const声明一样的语义：&lt;/p&gt;
