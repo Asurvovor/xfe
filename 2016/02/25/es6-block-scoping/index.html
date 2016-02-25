@@ -58,18 +58,21 @@
 
 
 <meta name="description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
-This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read">
+这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。
+Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的主流环境中) 中，变量只能被闭包在执行上下文的变量环境中。实际上，这意味着变量（通过var语句声明）是通过他们所">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES6介绍：块作用域">
 <meta property="og:url" content="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/index.html">
 <meta property="og:site_name" content="{XFE.js}">
 <meta property="og:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
-This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read">
-<meta property="og:updated_time" content="2016-02-25T10:44:52.000Z">
+这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。
+Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的主流环境中) 中，变量只能被闭包在执行上下文的变量环境中。实际上，这意味着变量（通过var语句声明）是通过他们所">
+<meta property="og:updated_time" content="2016-02-25T16:12:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6介绍：块作用域">
 <meta name="twitter:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
-This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read">
+这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。
+Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的主流环境中) 中，变量只能被闭包在执行上下文的变量环境中。实际上，这意味着变量（通过var语句声明）是通过他们所">
 
 
 
@@ -302,32 +305,34 @@ This is part 2 of a 10-part series of articles introducting you to some of the f
 
       
         <p>本文根据 <a href="http://dev.venntro.com/2013/09/es6-part-2/" target="_blank" rel="external">http://dev.venntro.com/2013/09/es6-part-2/</a> 翻译</p>
-<p>This is part 2 of a 10-part series of articles introducting you to some of the features of the upcoming ES6 specification. It may be helpful to read the first part if you missed it.</p>
-<h2 id="Let-Declarations"><a href="#Let-Declarations" class="headerlink" title="Let Declarations"></a>Let Declarations</h2><p>In ES5 (the current major revision of the ECMAScript specification, available in all modern environments) variables can only be scoped to the variable environment of an execution context. In practice, this means variables (declared with a var statement) are accessible throughout the execution context in which they appear:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// undefined (not a ReferenceError)</span></span><br><span class="line">    <span class="built_in">console</span>.log(z); <span class="comment">// ReferenceError: z is not defined</span></span><br><span class="line">    <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        <span class="keyword">var</span> y = <span class="number">5</span>; <span class="comment">// This declaration is hoisted</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>This is due to a concept commonly known as “hoisting”. When a function is invoked the declaration binding instantiation algorithm dictates that a binding is created in the variable environment for each variable and function declaration within its code. If you would like to learn more about hoisting in JavaScript I recommend reading Ben Cherry’s article on the subject.</p>
-<p>In ES6 variable and function declarations continue to behave in this manner (which is a good thing for backwards compatability). However, the introduction of the let keyword gives us some more flexibility:</p>
+<p>这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。</p>
+<h2 id="Let声明"><a href="#Let声明" class="headerlink" title="Let声明"></a>Let声明</h2><p>在ES5(当前ECMAScript规范的主要版本，他被实现在所有的主流环境中) 中，变量只能被闭包在执行上下文的变量环境中。实际上，这意味着变量（通过var语句声明）是通过他们所在的执行上下文来访问：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// undefined (not a ReferenceError)</span></span><br><span class="line">    <span class="built_in">console</span>.log(z); <span class="comment">// ReferenceError: z is not defined</span></span><br><span class="line">    <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        <span class="keyword">var</span> y = <span class="number">5</span>; <span class="comment">// This declaration is hoisted</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这归结于一个众所周知的概念叫“hoisting（提升）”。当一个函数被调用时，定义绑定初始化算法将函数代码中的每一个变量声明和函数声明绑定在变量环境中。如果你想了解更多关于JavaScript中hoisting的知识，我建议你去读读Ben Cherry的文章。</p>
+<p>ES6的变量和函数声明依然有这样的表现（这对于向后兼容是一件好事）。而且，关于let关键字的介绍给了我们更多的灵活性：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(y); <span class="comment">// ReferenceError: y is not defined</span></span><br><span class="line">    <span class="keyword">if</span> (x) &#123;</span><br><span class="line">        <span class="keyword">let</span> y = <span class="number">5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Variables declared with a let statement are created as bindings on the lexical environment, rather than the variable environment, of the current execution context. A change to the specification of block statements in ES6 means that each block has its own lexical environment. In the above example, a new lexical environment is created when the block (the body of the if statement) is evaluated. When the let statement is evaluated a binding is added to this lexical environment and is innaccessible from the outer lexical environment (that of the function declaration itself).</p>
-<p>We can see how new lexical environments for blocks are created in detail in the ES6 draft specification (ES6 §13.1.2):</p>
+<p>通过let语句声明的变量被绑定在当前执行上下文的词法环境，而不是在变量环境中。ES6规范对于块语句的一个改变是每一个块都有他自己的词法环境。在上面的例子中，当块（if语句的内容）被执行的时候会创建一个新的词法环境。当let语句被执行的时候会往这个词法环境中添加一个对应的绑定，并且它无法被外部的词法环境（函数声明的这个词法环境）访问到。</p>
+<p>在ES6草案中我们能找到针对块的这个新的词法环境的创建细节：</p>
 <p>Block : { StatementList }</p>
 <ul>
-<li>Let oldEnv be the running execution context’s LexicalEnvironment.</li>
-<li>Let blockEnv be the result of calling NewDeclarativeEnvironment passing oldEnv as the argument.</li>
-<li>Perform Block Declaration Instantiation using StatementList and blockEnv.</li>
-<li>Set the running execution context’s LexicalEnvironment to blockEnv.</li>
+<li>使oldEnv为当前执行上下文的词法环境。</li>
+<li>使blockEnv为通过传递oldEnv为参数调用NewDeclarativeEnvironment方法获得的声明式环境记录项</li>
+<li>执行块的定义初始化使用语句列表和blockEnv(这句意味着？)</li>
+<li>设置执行上下文的词法环境为blockEnv.</li>
 </ul>
-<p>It’s worth noting that let declarations are not hoisted in the same way as var declarations. Attempting to reference an identifier created as part of a let declaration before the declaration itself has been evaluated will result in an error:</p>
+<p>值得注意的是let声明不会像var声明一样被提升。试图在let声明被执行之前引用一个标识符会导致错误：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(x); <span class="comment">// ReferenceError: x is not defined</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
-<p>You can use let declarations anywhere you can use a var declaration. Of particular interest is the usage in loop initialisers. When using a var statement as a loop initialiser the declaration will be hoisted as discussed above and the variable will be accessible throughout the execution context in which it appears. This can be a common cause of confusion for beginners, especially those coming from a language that does implement block scoping. With the addition of the let declaration we can ensure our loop counter is only accessible within its block:</p>
+<p>任何能使用var声明地方都能使用let声明。特别值得关注的是他在loop初始值化器的使用。当使用var语句作为loop的初始化器时这个声明将被提升变量将被通过他所在的执行上下文访问。这对于那些从实现了块作用域的语言中转过来的新手来说，很容易导致混乱。<br>通过let声明我们能够确保loop的计数器只能被他的块所访问。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i); <span class="comment">// Prints 0 to 9</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">// ReferenceError: i is not defined</span></span><br></pre></td></tr></table></figure>
-<h2 id="Const-Declarations"><a href="#Const-Declarations" class="headerlink" title="Const Declarations"></a>Const Declarations</h2><p>ES6 introduces another type of declaration, const (ES6 § 13.2.1). It has the same block scoped binding semantics as let but its value is a read-only constant. They must have an initialiser, unlike let and var declarations:</p>
+<h2 id="Const-Declarations"><a href="#Const-Declarations" class="headerlink" title="Const Declarations"></a>Const Declarations</h2><h2 id="Const声明"><a href="#Const声明" class="headerlink" title="Const声明"></a>Const声明</h2><p>ES6介绍了另外一个声明类型，const(ES6 § 13.2.1). 他有和let一样的块作用域绑定语义但是他的值是一个只读的常量。不同于let和var声明，他们必须初始化：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x; <span class="comment">// x === undefined</span></span><br><span class="line"><span class="keyword">const</span> z; <span class="comment">// SyntaxError: const declarations must have an initializer</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> y = <span class="number">10</span>; <span class="comment">// y === 10</span></span><br><span class="line"></span><br><span class="line">y = <span class="number">20</span>; <span class="comment">// SyntaxError: Assignment to constant variable</span></span><br></pre></td></tr></table></figure>
-<p>Note that the const keyword has been supported by numerous engines for some time now, but with slightly different semantics to the ES6 spec. One of the main differences is that constants are currently declared in function scope, rather than block scope. Attempting to assign a new value to a constant fails, but does not produce an error in all engines.</p>
-<h2 id="Function-Declarations-in-Blocks"><a href="#Function-Declarations-in-Blocks" class="headerlink" title="Function Declarations in Blocks"></a>Function Declarations in Blocks</h2><p>In ES5 function declarations were not allowed to appear in blocks. Various implementations allowed this anyway, leading to code that behaves differently across those implementations (ES5 §12):</p>
-<p>Several widely used implementations of ECMAScript are known to support the use of FunctionDeclaration as a Statement. However there are significant and irreconcilable variations among the implementations in the semantics applied to such FunctionDeclarations.<br>ES6 proposes to explictly allow the use of function declarations within blocks, again following much the same semantics as let and const declarations:</p>
+<p>注意const关键字被很多引擎支持有一段时间了，但是在ES6规范中有一些略微的不同。一个主要的差别是常量当前被声明在函数作用域而不是块作用域。企图为一个常量赋值会导致失败，但是在所有的引擎中都不会导致报错。</p>
+<h2 id="块中的函数声明"><a href="#块中的函数声明" class="headerlink" title="块中的函数声明"></a>块中的函数声明</h2><p>ES5中函数声明不允许出现在块中。然而很多实现允许这样，导致了在这些实现中有不同的行为（ES5 §12）：</p>
+<p>目前广泛使用的几种ECMAScript的实现是支持把函数声明作为一个语句的。然而这些实现中对这样函数声明的语法应用上有着重大的，不可调和的差异。</p>
+<p>ES6提议明确允许函数声明出现在块中，也遵守和let，const声明一样的语义：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x) &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Do stuff</span></span><br><span class="line">    &#125;</span><br><span class="line">    someObj.method = fn;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(fn); <span class="comment">// ReferenceError: fn is not defined</span></span><br></pre></td></tr></table></figure>
-<p>However, there does appear to have been some debate around whether or not it will be possible to implement this so I’m unclear as to whether this will make it into the final spec or not. If you’re interested in discussions around these difficulties the Mozilla and WebKit issues are good places to look.</p>
-<p>Come back soon for the next part, where we’ll have a look at destructuring, probably one of the most talked-about ES6 features. Follow us on twitter to be notified when it’s posted, and don’t forget we’re hiring…</p>
+<p>然而，这个提议是否可能被实现，依然存在着一些不同的声音，因此我不能确定他是否会被写入最终的规范。如果你对这些疑难的讨论感兴趣，可以去Mozilla和Webkit的issue中看看。</p>
+<p>下节再见，下次我们将看看解构，可能是ES6中最多被谈到的特性之一。follow我们的twitter，在文章发布的时候得到通知，还有别忘了我们正在招聘…</p>
 
       
     </div>
@@ -519,7 +524,7 @@ This is part 2 of a 10-part series of articles introducting you to some of the f
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Let-Declarations"><span class="nav-number">1.</span> <span class="nav-text">Let Declarations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Const-Declarations"><span class="nav-number">2.</span> <span class="nav-text">Const Declarations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Declarations-in-Blocks"><span class="nav-number">3.</span> <span class="nav-text">Function Declarations in Blocks</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Let声明"><span class="nav-number">1.</span> <span class="nav-text">Let声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Const-Declarations"><span class="nav-number">2.</span> <span class="nav-text">Const Declarations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Const声明"><span class="nav-number">3.</span> <span class="nav-text">Const声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块中的函数声明"><span class="nav-number">4.</span> <span class="nav-text">块中的函数声明</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
