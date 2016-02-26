@@ -1,0 +1,881 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/xfe/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+
+
+<link href="/xfe/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/xfe/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="es6,js,tdz,translate," />
+
+
+
+
+
+  <link rel="alternate" href="/xfe/atom.xml" title="{XFE.js}" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="本文根据 http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/ 翻译
+The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).
+Although the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暂时性死区(TDZ)并不神秘">
+<meta property="og:url" content="http://sinaad.github.io/xfe/2016/02/26/temporal-dead-zone-tdz-demystified/index.html">
+<meta property="og:site_name" content="{XFE.js}">
+<meta property="og:description" content="本文根据 http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/ 翻译
+The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).
+Although the">
+<meta property="og:updated_time" content="2016-02-26T09:22:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="暂时性死区(TDZ)并不神秘">
+<meta name="twitter:description" content="本文根据 http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/ 翻译
+The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).
+Although the">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 暂时性死区(TDZ)并不神秘 | {XFE.js} </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13989991106bdad30ea927ab9ae93a09";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/xfe/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">{XFE.js}</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">新浪广告前端技术</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/xfe" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/xfe/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/xfe/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/xfe/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/xfe/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                暂时性死区(TDZ)并不神秘
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-26T17:16:19+08:00" content="2016-02-26">
+              2016-02-26
+            </time>
+          </span>
+
+          
+          <span class="post-author">
+            &nbsp; | &nbsp;
+            acelan
+          </span>
+          
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/xfe/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/xfe/2016/02/26/temporal-dead-zone-tdz-demystified/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/26/temporal-dead-zone-tdz-demystified/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文根据 <a href="http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/" target="_blank" rel="external">http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/</a> 翻译</p>
+<p>The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).</p>
+<p>Although the name may sound a bit intimidating, the concept is not hard to grasp, actually. But first, let’s take one step back and look at how scoping works in ES5:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="string">'outer scope'</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">    <span class="keyword">var</span> x = <span class="string">'inner scope'</span>;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+<p>Upon executing the code above, can you tell what the console.log(x) prints? If you guessed undefined, then keep reading. Otherwise, please take the time to read about declarations hoisting (MDN, Adequately Good) and variable shadowing, as these concepts are key to fully understanding TDZ.</p>
+<h2 id="Enter-the-Temporal-Dead-Zone"><a href="#Enter-the-Temporal-Dead-Zone" class="headerlink" title="Enter the Temporal Dead Zone"></a>Enter the Temporal Dead Zone</h2><p>Alright, now let’s take a small step forward and begin with an extremely simple and contrived TDZ scoping example:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(x); <span class="comment">// throws a ReferenceError</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="string">'hey'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>As you can see, one of the main differences between the old var and the new let/const declarations (besides their scope) is that the latter are constrained by the Temporal Dead Zone semantics, meaning they will throw a ReferenceError when accessed (read/write) before being initialized, instead of returning undefined as a var-declared variable would. This makes the code more predictable and easier to spot potential bugs. Simple, isn’t it?</p>
+<h2 id="Well-TDZ-is-not-quite-so-simple"><a href="#Well-TDZ-is-not-quite-so-simple" class="headerlink" title="Well, TDZ is not quite so simple"></a>Well, TDZ is not quite so simple</h2><p>Taking a second look at the previous example, one could deduce that let/const declarations simply do not hoist, and that would explain the ReferenceError, right? Nope, that’s an incorrect over-simplification (and beware of uninformed resources claiming that!).</p>
+<p>Let’s go back to the very first example in this article, replacing var with let and see what happens:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="string">'outer scope'</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">    <span class="keyword">let</span> x = <span class="string">'inner scope'</span>;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure></p>
+<p>Can you guess what console.log(x) will print now? Well, actually, the answer is nothing – the code above will throw a ReferenceError due to the TDZ semantics. That is because let/const declarations do hoist, but they throw errors when accessed before being initialized (instead of returning undefined as var would). I know the previous statement has already been expressed in this article, but this is actually the main point of TDZ and it is worth repeating as much as necessary (in fact, go ahead and do some memory training – repeat the bold parts in this paragraph until it digs deep into your brain ;)).</p>
+<p>Of course, this is still a bit of an over-simplification, I’ve put a lot of effort in balancing accuracy with simplicity to make an easy to remember and understand overview. Now onto the details…</p>
+<h2 id="The-gory-details"><a href="#The-gory-details" class="headerlink" title="The gory details"></a>The gory details</h2><p>Curious, are we? Let’s travel a bit deeper into the TDZ then.</p>
+<p>The ECMAScript 2015 spec. clearly explains the let/const declarations hoisting and TDZ semantics in a non-normative note:</p>
+<h3 id="13-2-1-Let-and-Const-Declarations"><a href="#13-2-1-Let-and-Const-Declarations" class="headerlink" title="13.2.1 Let and Const Declarations"></a>13.2.1 Let and Const Declarations</h3><p><em>NOTE</em> let and const declarations define variables that are scoped to the running execution context’s LexicalEnvironment. The variables are created when their containing Lexical Environment is instantiated but may not be accessed in any way until the variable’s LexicalBinding is evaluated. A variable defined by a LexicalBinding with an Initializer is assigned the value of its Initializer’s AssignmentExpression when the LexicalBinding is evaluated, not when the variable is created. If a LexicalBinding in a let declaration does not have an Initializer the variable is assigned the value undefined when the LexicalBinding is evaluated.<br>Just in case your ECMAScript-fu is not sharp enough, I’ll translate the relevant spec. parts to English:</p>
+<blockquote>
+<p>The variables are created when their containing Lexical Environment is instantiated […]</p>
+</blockquote>
+<p>This means whenever control flow enters a new scope (e.g. module, function or block scope), all the let/const bindings belonging to the given scope are instatiated before any code inside of the given scope is executed – in other words, let/const declarations hoist!</p>
+<blockquote>
+<p>[…] but may not be accessed in any way until the variable’s LexicalBinding is evaluated.</p>
+</blockquote>
+<p>This is the TDZ. A given let/const-declared binding can’t be acessed in any way (read/write) until control flow has evaluated the declaration statement – that does not refer to the hoisting, but rather to where the declaration actually is in the code. It is easier to explain with examples:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Accessing `x` here before control flow evaluates the `let x` statement</span></span><br><span class="line"><span class="comment">// would throw a ReferenceError due to TDZ.</span></span><br><span class="line"><span class="comment">// console.log(x);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">42</span>;</span><br><span class="line"><span class="comment">// From here on, accessing `x` is perfectly fine!</span></span><br><span class="line"><span class="built_in">console</span>.log(x);</span><br></pre></td></tr></table></figure>
+<p>And the last part:</p>
+<p>If a LexicalBinding in a let declaration does not have an Initializer the variable is assigned the value undefined when the LexicalBinding is evaluated.<br>This simply means that:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x;</span><br></pre></td></tr></table></figure></p>
+<p>Is equivalent to:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure></p>
+<p>Likewise, trying to access x in any way before control flow evaluates the initializer (or the “implicit” = undefined initializer) will result in a ReferenceError, while accessing it after the control flow has evaluated the declaration will work fine – reading the x variable after the let x declaration in both samples above would return undefined.</p>
+<p>Hopefully you should have a good idea of the TDZ semantics by now, so let’s try out some slightly more advanced examples to exercise.</p>
+<p>Consider this code:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = x;</span><br></pre></td></tr></table></figure></p>
+<p>Does the code execute without errors? What is the value of x after the code executes?</p>
+<p>First off, remember that a let/const variable only counts as initialized after its initializer has been fully evaluated – that is, after the assignment’s right-hand side expression has been evaluated and its resulting value has been assigned to the declared variable.</p>
+<p>In this case, the right-hand side expression tries to read the x variable, but x’s initializer has not been fully evaluated yet – in fact we are evaluating it at that point – so x still counts as uninitialized at that point and thus trying to read it throws a TDZ ReferenceError.</p>
+<p>Alright, so here is another slightly advanced TDZ example – courtesy of TC39 member and Traceur maintainer Erik Arvindson:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = f();</span><br><span class="line"><span class="keyword">const</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> b; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>In the first line, the f() call makes control flow jump to and execute the f function, which in turn tries to read the b constant which, at this point in the runtime, is still uninitialized (in TDZ) and thus throws a ReferenceError. As you can see, TDZ semantics apply when trying to access variables from parent scopes as well.</p>
+<h2 id="TDZ-is-everywhere"><a href="#TDZ-is-everywhere" class="headerlink" title="TDZ is everywhere!"></a>TDZ is everywhere!</h2><p>So far I’ve only shown examples with let/const declarations, but the TDZ semantics actually apply to a wide area of the ES2015 spec. For instance, default parameters also have TDZ semantics:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Works fine.</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">a, b = a</span>) </span>&#123;</span><br><span class="line">    a === <span class="number">1</span>;</span><br><span class="line">    b === <span class="number">1</span>;</span><br><span class="line">&#125;(<span class="number">1</span>, <span class="literal">undefined</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// Default parameters are evaluated from left to right,</span></span><br><span class="line"><span class="comment">// so `b` is in the TDZ when `a`'s initializer tries to read it.</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">a = b, b</span>) </span>&#123;&#125;(<span class="literal">undefined</span>, <span class="number">1</span>)); <span class="comment">// ReferenceError</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// `a` is still in the TDZ when its own initializer tries to read `a`.</span></span><br><span class="line"><span class="comment">// See the "gory details" section above for more details.</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">a = a</span>) </span>&#123;&#125;()); <span class="comment">// ReferenceError</span></span><br></pre></td></tr></table></figure></p>
+<p>One may wonder, then, what happens in this case:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> b = <span class="number">1</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">a = b, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a, b);</span><br><span class="line">&#125;(<span class="literal">undefined</span>, <span class="number">2</span>));</span><br></pre></td></tr></table></figure></p>
+<p>The example above may look a bit confusing, but it is actually a TDZ violation too – that is because default parameters are evaluated in an intermediate scope which exists between the parent and inner scope of the given function. The a and b parameters are bindings of this (intermediate) scope and are initialized from left to right, hence when a’s initializer tries to read b, the b identifier resolves to the b binding in the current scope (the intermediate scope) which is uninitialized at that point and thus throws a ReferenceError due to the TDZ semantics.</p>
+<p>As another example, subclasses (created with class x extends y {})’s constructors that try to access this before calling the super constructor will throw a TDZ ReferenceError. That is because as long as a subclass’s constructor has not yet called super() its this binding is considered uninitialized. Likewise, if a subclass constructor execution reaches the end of the constructor code without calling super(), the constructor would (like any other constructor) implicitly try to return this;, which would then throw a TDZ ReferenceError as this is still uninitialized. Reference: ES6 super construct proposal. (note, though, that this proposal is only two weeks old at the time of writing, so it may be changed or discarded altogether from the final ES2015 spec.)</p>
+<h2 id="TDZ-is-everywhere…-Except-in-transpilers-and-engines"><a href="#TDZ-is-everywhere…-Except-in-transpilers-and-engines" class="headerlink" title="TDZ is everywhere… Except in transpilers and engines"></a>TDZ is everywhere… Except in transpilers and engines</h2><p>Currently, transpilers such as 6to5 and Traceur do not enforce TDZ semantics whatsoever – there are open issues in Traceur and 6to5, and just to be pendantic, 6to5 attempted to ship a quick and dirty TDZ static checking feature but had to retract it immediately afterwards due to various bugs in the algorithm. There are quite a few reasons transpilers didn’t give much priority to TDZ enforcing yet:</p>
+<p>Performance: identifiers that are covered by the TDZ semantics must have every read/write access operation wrapped by a runtime check in order to fully cover the TDZ semantics (see the nested scope example in the “gory details” section above). This issue can be worked around by having optional TDZ checking transformers that are only enabled in a development environment – this should work fine as long as your code doesn’t expect TDZ ReferenceErrors being thrown in order to work properly (which should be a rare enough use case).</p>
+<p>Cost/benefit: Implementing proper TDZ checking takes some time and effort that could be spent writing transformers for new features or improving existing ones.</p>
+<p>It is impossible to catch all possible user errors: most transpilers’ goal is to transpile valid ES.next to valid ES.current, so they expect you to know what you’re doing. It would take a nearly infinite amount of time to try to catch all kinds of errors, gibberish and marginal error edge cases that an user can input into a transpiler.</p>
+<p>And as of the time of writing, no browser JavaScript engine has full let declaration spec. compliancy (reference). Firefox Nightly (version 38.0a1 (2015-01-30) at the time of writing) ships with a nice, clean and objective TDZ error message though:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; x; <span class="keyword">let</span> x; &#125;</span><br><span class="line"><span class="comment">// ReferenceError: can't access lexical declaration `x' before initialization</span></span><br></pre></td></tr></table></figure></p>
+<p>This means you must be extra careful when making use of transpilers, as you may be writing code that seems okay right now but that may break any time you update the transpiler to a version which enforces proper TDZ semantics, or when you try to run the code without a transpiling step in an ES2015+ TDZ-compliant environment.</p>
+<h2 id="And-what-about-var"><a href="#And-what-about-var" class="headerlink" title="And what about var?"></a>And what about var?</h2><p>var-declared variables will still behave as they currently do in ES5 – the ECMAScript spec. must always evolve in backwards-compatible ways in order for browser vendors to adopt the new spec. without breaking the web. Theoretically, it could be possible to apply TDZ semantics to var by introducing a new “execution mode” (similar to ‘use strict’), however that is very unlikely to happen seeing as:</p>
+<p>The majority of TC39 opposes adding more execution modes/pragmas/flags.<br>Even if such new execution mode were to be implemented, enforcing TDZ semantics on var-declared variables would introduce an unnecessary entry barrier and refactoring hazards to those who want to port their existing code to the hypothetical new execution mode.<br>Closing words<br>The Temporal Dead Zone semantics can be very useful by providing error feedback to the developer instead of yielding unexpected results (as ES5 code may currently do) in cases where your code may accidentally access uninitialized bindings. Just be aware of these semantics when using a transpiler that does not enforce TDZ, as you may be writing broken code without knowing it.</p>
+<p>Or, just in case you’re really afraid of TDZ – which you shouldn’t be, seeing as most of the time the errors will be clear and easy to fix once transpilers/engines implement the TDZ semantics –, you may as well keep using var for the time being which does not have TDZ semantics. ;)</p>
+<h2 id="Further-reading"><a href="#Further-reading" class="headerlink" title="Further reading"></a>Further reading</h2><p>Temporal Dead Zone explanations by TC39 members Rick Waldron and Allen Wirfs-Brock.<br>let - JavaScript at Mozilla Developer Network.<br>Block-Scoped Declarations - You Don’t Know JS: ES6 &amp; Beyond by Kyle Simpson.<br>ES6 Notes: Default values of parameters by Dmitry Soshnikov.</p>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/xfe/tags/es6/" rel="tag">#es6</a>
+          
+            <a href="/xfe/tags/js/" rel="tag">#js</a>
+          
+            <a href="/xfe/tags/tdz/" rel="tag">#tdz</a>
+          
+            <a href="/xfe/tags/translate/" rel="tag">#translate</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/xfe/2016/02/25/es6-block-scoping/" rel="next" title="ES6介绍：块作用域">
+                <i class="fa fa-chevron-left"></i> ES6介绍：块作用域
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/02/26/temporal-dead-zone-tdz-demystified/"
+     data-title="暂时性死区(TDZ)并不神秘"
+     data-content=""
+     data-url="http://sinaad.github.io/xfe/2016/02/26/temporal-dead-zone-tdz-demystified/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/02/26/temporal-dead-zone-tdz-demystified/"
+           data-title="暂时性死区(TDZ)并不神秘" data-url="http://sinaad.github.io/xfe/2016/02/26/temporal-dead-zone-tdz-demystified/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://tp4.sinaimg.cn/2231440955/180/5749469848/1"
+               alt="AD-FE Team" />
+          <p class="site-author-name" itemprop="name">AD-FE Team</p>
+          <p class="site-description motion-element" itemprop="description">我们一直努力贴好小广告</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/xfe/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/xfe/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/xfe/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/xfe/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/orgs/sinaad/teams/xfe" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/acelan" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enter-the-Temporal-Dead-Zone"><span class="nav-number">1.</span> <span class="nav-text">Enter the Temporal Dead Zone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Well-TDZ-is-not-quite-so-simple"><span class="nav-number">2.</span> <span class="nav-text">Well, TDZ is not quite so simple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-gory-details"><span class="nav-number">3.</span> <span class="nav-text">The gory details</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2-1-Let-and-Const-Declarations"><span class="nav-number">3.1.</span> <span class="nav-text">13.2.1 Let and Const Declarations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TDZ-is-everywhere"><span class="nav-number">4.</span> <span class="nav-text">TDZ is everywhere!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TDZ-is-everywhere…-Except-in-transpilers-and-engines"><span class="nav-number">5.</span> <span class="nav-text">TDZ is everywhere… Except in transpilers and engines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#And-what-about-var"><span class="nav-number">6.</span> <span class="nav-text">And what about var?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Further-reading"><span class="nav-number">7.</span> <span class="nav-text">Further reading</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AD-FE Team</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/xfe/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/xfe/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/xfe/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/xfe/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/xfe/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/xfe/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/xfe/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/xfe/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/xfe/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/xfe/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/xfe/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/xfe/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"sinaad-xfe"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        processEscapes: true
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+      MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+        //  do something with the error.  message[2] is the Error object that records the problem.
+        console.log(message);
+      });
+  </script>
+
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+  </script>
+
+  <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+
+</body>
+</html>
