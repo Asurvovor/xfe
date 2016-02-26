@@ -96,7 +96,7 @@
     <link href="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/"/>
     <id>http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/</id>
     <published>2016-02-25T10:40:47.000Z</published>
-    <updated>2016-02-26T10:53:21.000Z</updated>
+    <updated>2016-02-26T10:59:59.000Z</updated>
     
     <content type="html">&lt;p&gt;本文根据 &lt;a href=&quot;http://dev.venntro.com/2013/09/es6-part-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dev.venntro.com/2013/09/es6-part-2/&lt;/a&gt; 翻译&lt;/p&gt;
 &lt;p&gt;这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。&lt;/p&gt;
@@ -168,7 +168,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;em&gt;NOTE&lt;/em&gt; let and const declarations define variables that are scoped to the running execution context’s LexicalEnvironment. The variables are created when their containing Lexical Environment is instantiated but may not be accessed in any way until the variable’s LexicalBinding is evaluated. A variable defined by a LexicalBinding with an Initializer is assigned the value of its Initializer’s AssignmentExpression when the LexicalBinding is evaluated, not when the variable is created. If a LexicalBinding in a let declaration does not have an Initializer the variable is assigned the value undefined when the LexicalBinding is evaluated.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;这里大概的意思是说，当遇到块语句的时候，就会创建一个新的词法环境，创建后会立即进行块定义初始化来绑定块中的变量（这里很像函数执行环境中的定义绑定初始化过程，也就是其实已经执行了类似的hoisting过程），唯一的差别在于上面的规范规定了在真正执行到let语句的时候（即使已经通过块定义初始化绑定）才能对变量引用进行读/写，这就产生的TDZ&lt;/p&gt;
+&lt;p&gt;这里大概的意思是说，当遇到块语句的时候，就会创建一个新的词法环境，创建后会立即进行块定义初始化来绑定块中的变量（这里很像函数执行环境中的定义绑定初始化过程，也就是其实已经执行了类似的hoisting过程），唯一的差别在于上面的规范规定了在真正执行到let语句的时候（即使已经通过块定义初始化绑定）才能对变量引用进行读/写，这就产生了TDZ，且这也是虽然有定义初始化过程，但没显示出hoisting特性的原因&lt;/p&gt;
 &lt;/blockquote&gt;
 </content>
     
