@@ -5,7 +5,7 @@
   <link href="/xfe/atom.xml" rel="self"/>
   
   <link href="http://sinaad.github.io/xfe/"/>
-  <updated>2016-02-26T07:58:39.000Z</updated>
+  <updated>2016-02-26T08:45:17.000Z</updated>
   <id>http://sinaad.github.io/xfe/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/"/>
     <id>http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/</id>
     <published>2016-02-25T10:40:47.000Z</published>
-    <updated>2016-02-26T07:58:39.000Z</updated>
+    <updated>2016-02-26T08:45:17.000Z</updated>
     
     <content type="html">&lt;p&gt;本文根据 &lt;a href=&quot;http://dev.venntro.com/2013/09/es6-part-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dev.venntro.com/2013/09/es6-part-2/&lt;/a&gt; 翻译&lt;/p&gt;
 &lt;p&gt;这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。&lt;/p&gt;
@@ -42,7 +42,7 @@
 &lt;li&gt;设置执行上下文的词法环境为blockEnv.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;blockquote&gt;
-&lt;p&gt;译者：这里两个方法&lt;code&gt;NewDeclarativeEnvironment&lt;/code&gt;和&lt;code&gt;BlockDeclarationInstantiation(code, env）&lt;/code&gt; 传送门 &lt;a href=&quot;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newdeclarativeenvironment&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newdeclarativeenvironment&lt;/a&gt; 和 &lt;a href=&quot;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-blockdeclarationinstantiation&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-blockdeclarationinstantiation&lt;/a&gt;&lt;br&gt;&lt;code&gt;NewDeclarativeEnvironment&lt;/code&gt;这个方法简单说就是创建一个新的声明式环境，它的外部环境是传入的oldEnv&lt;br&gt;&lt;code&gt;BlockDeclarationInstantiation(code, env）&lt;/code&gt;这个方法跟本文关系比较密切，一会详细说明下:(todo)&lt;/p&gt;
+&lt;p&gt;译者：这里两个方法&lt;code&gt;NewDeclarativeEnvironment&lt;/code&gt;和&lt;code&gt;BlockDeclarationInstantiation(code, env）&lt;/code&gt; 传送门 &lt;a href=&quot;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newdeclarativeenvironment&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newdeclarativeenvironment&lt;/a&gt; 和 &lt;a href=&quot;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-blockdeclarationinstantiation&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.ecma-international.org/ecma-262/6.0/index.html#sec-blockdeclarationinstantiation&lt;/a&gt;&lt;br&gt;&lt;code&gt;NewDeclarativeEnvironment&lt;/code&gt;这个方法简单说就是创建一个新的声明式环境，它的外部环境是传入的oldEnv&lt;br&gt;&lt;code&gt;BlockDeclarationInstantiation(code, env）&lt;/code&gt;这个方法跟本文关系比较密切，见本文后面&lt;a href=&quot;#补充说明&quot;&gt;补充说明&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;译者：这里有个疑问，oldEnv被传递来创建新的blockEnv，那么blockEnv应该是持有外部词法环境，那么查找在上面的TDZ形成的时候查找不到应该去查找外部词法环境就是oldEnv，也就是如果外部声明了某个变量的时候就应该找到而不是报错，这样就没有TDZ的概念了&lt;br&gt;例如：&lt;br&gt;    &lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; foo;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    foo = &lt;span class=&quot;number&quot;&gt;111&lt;/span&gt;;  &lt;span class=&quot;comment&quot;&gt;//ReferenceError？&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; foo;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;值得注意的是let声明不会像var声明一样被提升。试图在let声明被执行之前引用一个标识符会导致错误：&lt;/p&gt;
@@ -61,6 +61,31 @@
 &lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (x) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;fn&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// Do stuff&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    someObj.method = fn;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(fn); &lt;span class=&quot;comment&quot;&gt;// ReferenceError: fn is not defined&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;然而，这个提议是否可能被实现，依然存在着一些不同的声音，因此我不能确定他是否会被写入最终的规范。如果你对这些疑难的讨论感兴趣，可以去Mozilla和Webkit的issue中看看。&lt;/p&gt;
 &lt;p&gt;下节再见，下次我们将看看解构，可能是ES6中最多被谈到的特性之一。follow我们的twitter，在文章发布的时候得到通知，还有别忘了我们正在招聘…&lt;/p&gt;
+&lt;h2 id=&quot;补充说明&quot;&gt;&lt;a href=&quot;#补充说明&quot; class=&quot;headerlink&quot; title=&quot;补充说明&quot;&gt;&lt;/a&gt;补充说明&lt;/h2&gt;&lt;h3 id=&quot;ES6-amp-13-2-14-运行时语义：块定义初始化&quot;&gt;&lt;a href=&quot;#ES6-amp-13-2-14-运行时语义：块定义初始化&quot; class=&quot;headerlink&quot; title=&quot;ES6 &amp;amp; 13.2.14 运行时语义：块定义初始化&quot;&gt;&lt;/a&gt;ES6 &amp;amp; 13.2.14 运行时语义：块定义初始化&lt;/h3&gt;&lt;p&gt;&lt;em&gt;注意&lt;/em&gt; 当一个块或者Case块内容被执行时，一个新的声明式环境记录被创建并且在这个环境记录项中初始化每一个块作用域的变量，常量，函数，生成器函数，或者块中的类声明的绑定。&lt;br&gt;块定义初始化&lt;br&gt;块定义初始化使用code和env为参数，按照下面的方式来执行。code是块对应的内容的语法产生式。env是指绑定被创建的那个声明式环境记录。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使declarations为代码的词法作用域声明&lt;/li&gt;
+&lt;li&gt;针对每一个declarations里面的元素d, 执行&lt;ul&gt;
+&lt;li&gt;a. 对d的BoundNames里面的每一个元素dn，执行&lt;ul&gt;
+&lt;li&gt;i. 如果d的IsConstantDeclaration为true，那么&lt;ol&gt;
+&lt;li&gt;使status为env.CreateImmutableBinding(dn, true).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;ii. 否则，&lt;ol&gt;
+&lt;li&gt;使status为env.CreateMutableBinding(dn, false).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;iii. 断言：status永远不会是一个突然完结&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;b. 如果d是一个GeneratorDeclaration产生式或者FunctionDeclaration产生式, 那么&lt;ul&gt;
+&lt;li&gt;i. 使fn为d的BoundNames的唯一元素&lt;/li&gt;
+&lt;li&gt;ii. 使fn为为了d使用env为参数执行InstantiateFunctionObject的结果&lt;/li&gt;
+&lt;li&gt;iii. 执行env.InitializeBinding(fn, fo).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 </content>
     
     <summary type="html">
@@ -224,7 +249,7 @@
     <link href="http://sinaad.github.io/xfe/2016/02/18/when-fe-has-the-power-of-server/"/>
     <id>http://sinaad.github.io/xfe/2016/02/18/when-fe-has-the-power-of-server/</id>
     <published>2016-02-18T08:29:25.000Z</published>
-    <updated>2016-02-19T10:17:05.000Z</updated>
+    <updated>2016-02-26T07:58:48.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;原文链接：&lt;a href=&quot;http://www.barretlee.com/blog/2016/02/16/when-fe-has-the-power-of-server/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.barretlee.com/blog/2016/02/16/when-fe-has-the-power-of-server/&lt;/a&gt;&lt;/p&gt;
