@@ -5,7 +5,7 @@
   <link href="/xfe/atom.xml" rel="self"/>
   
   <link href="http://sinaad.github.io/xfe/"/>
-  <updated>2016-02-26T02:32:24.000Z</updated>
+  <updated>2016-02-26T07:58:39.000Z</updated>
   <id>http://sinaad.github.io/xfe/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/"/>
     <id>http://sinaad.github.io/xfe/2016/02/25/es6-block-scoping/</id>
     <published>2016-02-25T10:40:47.000Z</published>
-    <updated>2016-02-26T02:32:24.000Z</updated>
+    <updated>2016-02-26T07:58:39.000Z</updated>
     
     <content type="html">&lt;p&gt;本文根据 &lt;a href=&quot;http://dev.venntro.com/2013/09/es6-part-2/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dev.venntro.com/2013/09/es6-part-2/&lt;/a&gt; 翻译&lt;/p&gt;
 &lt;p&gt;这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。&lt;/p&gt;
@@ -123,7 +123,7 @@
     <link href="http://sinaad.github.io/xfe/2016/02/18/create-team-blog-with-hexo-and-github/"/>
     <id>http://sinaad.github.io/xfe/2016/02/18/create-team-blog-with-hexo-and-github/</id>
     <published>2016-02-18T14:07:44.000Z</published>
-    <updated>2016-02-19T07:26:21.000Z</updated>
+    <updated>2016-02-26T07:38:06.000Z</updated>
     
     <content type="html">&lt;p&gt;为了沉淀团队技术分享，所以最近需要创建一个前端团队博客，确定了下面几个目标：&lt;/p&gt;
 &lt;ul&gt;
