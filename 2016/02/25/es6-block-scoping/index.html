@@ -67,7 +67,7 @@ Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的
 <meta property="og:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
 这是介绍即将到来的es6规范特性的系列文章的十个章节中的第二部分。如果你没读过第一部分，读一读可能对你有益。
 Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的主流环境中) 中，变量只能被闭包在执行上下文的变量环境中。实际上，这意味着变量（通过var语句声明）是通过他们所">
-<meta property="og:updated_time" content="2016-02-26T02:16:30.000Z">
+<meta property="og:updated_time" content="2016-02-26T02:31:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6介绍：块作用域">
 <meta name="twitter:description" content="本文根据 http://dev.venntro.com/2013/09/es6-part-2/ 翻译
@@ -319,11 +319,12 @@ Let声明在ES5(当前ECMAScript规范的主要版本，他被实现在所有的
 <p>Block : { StatementList }</p>
 <ol>
 <li>使oldEnv为当前执行上下文的词法环境。</li>
-<li>使blockEnv为通过传递oldEnv为参数调用NewDeclarativeEnvironment方法获得的声明式环境记录项</li>
-<li>执行块的定义初始化使用语句列表和blockEnv(这句意味着？翻译有问题？)</li>
+<li>使blockEnv为通过传递oldEnv为参数调用<code>NewDeclarativeEnvironment</code>方法获得的声明式环境记录项</li>
+<li>使用块代码和blockEnv来执行块定义初始化<code>BlockDeclarationInstantiation(code, env）</code></li>
 <li>设置执行上下文的词法环境为blockEnv.</li>
 </ol>
 <blockquote>
+<p>译者：这里两个方法<code>NewDeclarativeEnvironment</code>和<code>BlockDeclarationInstantiation(code, env）</code> 传送门 <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newdeclarativeenvironment" target="_blank" rel="external">http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newdeclarativeenvironment</a> 和 <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-blockdeclarationinstantiation" target="_blank" rel="external">http://www.ecma-international.org/ecma-262/6.0/index.html#sec-blockdeclarationinstantiation</a><br><code>NewDeclarativeEnvironment</code>这个方法简单说就是创建一个新的声明式环境，它的外部环境是传入的oldEnv<br><code>BlockDeclarationInstantiation(code, env）</code>这个方法跟本文关系比较密切，一会详细说明下:(todo)</p>
 <p>译者：这里有个疑问，oldEnv被传递来创建新的blockEnv，那么blockEnv应该是持有外部词法环境，那么查找在上面的TDZ形成的时候查找不到应该去查找外部词法环境就是oldEnv，也就是如果外部声明了某个变量的时候就应该找到而不是报错，这样就没有TDZ的概念了<br>例如：<br>    <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo;</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    foo = <span class="number">111</span>;  <span class="comment">//ReferenceError？</span></span><br><span class="line">    <span class="keyword">let</span> foo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <p>值得注意的是let声明不会像var声明一样被提升。试图在let声明被执行之前引用一个标识符会导致错误：</p>
