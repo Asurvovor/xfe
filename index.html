@@ -327,8 +327,9 @@
         
           
           本文根据 http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/ 翻译
-The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).
-Although the name may sound a bit intimidating, the concept is 
+暂时性死区是ECMAScript与作用域相关的一个新语义模块， 在ES2015(又叫ES6)中介绍。
+虽然这个名字听起来有点吓人，但实际上这个概念不难把握。首先，让我们退一步看看ES5中作用域是如何工作的：
+12345var x = 'outer scope';(function() &#123;    console.log(x);    var x =
           ...
 
           <div class="post-more-link text-center">

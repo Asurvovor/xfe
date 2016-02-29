@@ -58,21 +58,24 @@
 
 
 <meta name="description" content="本文根据 http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/ 翻译
-The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).
-Although the">
+暂时性死区是ECMAScript与作用域相关的一个新语义模块， 在ES2015(又叫ES6)中介绍。
+虽然这个名字听起来有点吓人，但实际上这个概念不难把握。首先，让我们退一步看看ES5中作用域是如何工作的：
+12345var x = &apos;outer scope">
 <meta property="og:type" content="article">
 <meta property="og:title" content="暂时性死区(TDZ)并不神秘">
 <meta property="og:url" content="http://sinaad.github.io/xfe/2016/02/26/temporal-dead-zone-tdz-demystified/index.html">
 <meta property="og:site_name" content="{XFE.js}">
 <meta property="og:description" content="本文根据 http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/ 翻译
-The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).
-Although the">
-<meta property="og:updated_time" content="2016-02-26T09:22:26.000Z">
+暂时性死区是ECMAScript与作用域相关的一个新语义模块， 在ES2015(又叫ES6)中介绍。
+虽然这个名字听起来有点吓人，但实际上这个概念不难把握。首先，让我们退一步看看ES5中作用域是如何工作的：
+12345var x = &apos;outer scope">
+<meta property="og:updated_time" content="2016-02-29T04:09:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="暂时性死区(TDZ)并不神秘">
 <meta name="twitter:description" content="本文根据 http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/ 翻译
-The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).
-Although the">
+暂时性死区是ECMAScript与作用域相关的一个新语义模块， 在ES2015(又叫ES6)中介绍。
+虽然这个名字听起来有点吓人，但实际上这个概念不难把握。首先，让我们退一步看看ES5中作用域是如何工作的：
+12345var x = &apos;outer scope">
 
 
 
@@ -312,31 +315,41 @@ Although the">
 
       
         <p>本文根据 <a href="http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/" target="_blank" rel="external">http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/</a> 翻译</p>
-<p>The Temporal Dead Zone refers to a new set of ECMAScript semantics regarding scope, introduced in ES2015 (aka ES6).</p>
-<p>Although the name may sound a bit intimidating, the concept is not hard to grasp, actually. But first, let’s take one step back and look at how scoping works in ES5:</p>
+<p>暂时性死区是ECMAScript与作用域相关的一个新语义模块， 在ES2015(又叫ES6)中介绍。</p>
+<p>虽然这个名字听起来有点吓人，但实际上这个概念不难把握。首先，让我们退一步看看ES5中作用域是如何工作的：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="string">'outer scope'</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">    <span class="keyword">var</span> x = <span class="string">'inner scope'</span>;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
-<p>Upon executing the code above, can you tell what the console.log(x) prints? If you guessed undefined, then keep reading. Otherwise, please take the time to read about declarations hoisting (MDN, Adequately Good) and variable shadowing, as these concepts are key to fully understanding TDZ.</p>
-<h2 id="Enter-the-Temporal-Dead-Zone"><a href="#Enter-the-Temporal-Dead-Zone" class="headerlink" title="Enter the Temporal Dead Zone"></a>Enter the Temporal Dead Zone</h2><p>Alright, now let’s take a small step forward and begin with an extremely simple and contrived TDZ scoping example:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(x); <span class="comment">// throws a ReferenceError</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="string">'hey'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>As you can see, one of the main differences between the old var and the new let/const declarations (besides their scope) is that the latter are constrained by the Temporal Dead Zone semantics, meaning they will throw a ReferenceError when accessed (read/write) before being initialized, instead of returning undefined as a var-declared variable would. This makes the code more predictable and easier to spot potential bugs. Simple, isn’t it?</p>
-<h2 id="Well-TDZ-is-not-quite-so-simple"><a href="#Well-TDZ-is-not-quite-so-simple" class="headerlink" title="Well, TDZ is not quite so simple"></a>Well, TDZ is not quite so simple</h2><p>Taking a second look at the previous example, one could deduce that let/const declarations simply do not hoist, and that would explain the ReferenceError, right? Nope, that’s an incorrect over-simplification (and beware of uninformed resources claiming that!).</p>
-<p>Let’s go back to the very first example in this article, replacing var with let and see what happens:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="string">'outer scope'</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">    <span class="keyword">let</span> x = <span class="string">'inner scope'</span>;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure></p>
-<p>Can you guess what console.log(x) will print now? Well, actually, the answer is nothing – the code above will throw a ReferenceError due to the TDZ semantics. That is because let/const declarations do hoist, but they throw errors when accessed before being initialized (instead of returning undefined as var would). I know the previous statement has already been expressed in this article, but this is actually the main point of TDZ and it is worth repeating as much as necessary (in fact, go ahead and do some memory training – repeat the bold parts in this paragraph until it digs deep into your brain ;)).</p>
-<p>Of course, this is still a bit of an over-simplification, I’ve put a lot of effort in balancing accuracy with simplicity to make an easy to remember and understand overview. Now onto the details…</p>
-<h2 id="The-gory-details"><a href="#The-gory-details" class="headerlink" title="The gory details"></a>The gory details</h2><p>Curious, are we? Let’s travel a bit deeper into the TDZ then.</p>
-<p>The ECMAScript 2015 spec. clearly explains the let/const declarations hoisting and TDZ semantics in a non-normative note:</p>
-<h3 id="13-2-1-Let-and-Const-Declarations"><a href="#13-2-1-Let-and-Const-Declarations" class="headerlink" title="13.2.1 Let and Const Declarations"></a>13.2.1 Let and Const Declarations</h3><p><em>NOTE</em> let and const declarations define variables that are scoped to the running execution context’s LexicalEnvironment. The variables are created when their containing Lexical Environment is instantiated but may not be accessed in any way until the variable’s LexicalBinding is evaluated. A variable defined by a LexicalBinding with an Initializer is assigned the value of its Initializer’s AssignmentExpression when the LexicalBinding is evaluated, not when the variable is created. If a LexicalBinding in a let declaration does not have an Initializer the variable is assigned the value undefined when the LexicalBinding is evaluated.<br>Just in case your ECMAScript-fu is not sharp enough, I’ll translate the relevant spec. parts to English:</p>
+<p>通过执行上面的代码，你能告诉我<code>console.log(x)</code>打印的是什么么？如果你猜是<code>undefined</code>, 那么你可以往下继续阅读。否则，你需要花点事件读读关于声明提升（MDN, 足够好的）和变量隐藏相关的内容，这是充分了解TDZ的关键。</p>
+<h2 id="接触暂时性死区（TDZ）"><a href="#接触暂时性死区（TDZ）" class="headerlink" title="接触暂时性死区（TDZ）"></a>接触暂时性死区（TDZ）</h2><p>好的，现在让我们稍微往前一点点，从一个及其简单并且刻意的TDZ作用域的例子开始：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(x); <span class="comment">// throws a ReferenceError</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="string">'hey'</span>;</span><br></pre></td></tr></table></figure>
+<p>就像你看到的一样，老的<code>var</code>和新的<code>let/const</code>声明（除了他们的作用域外）最大的主要不同点之一就是后者被暂时性死区所约束，也就是他们将抛出<code>ReferenceError</code>当在初始化之前被访问(读/写), 而不是跟var声明变量一样返回<code>undefined</code>。这使得代码中的潜在问题更容易被预测和发现，是吧？</p>
+<h2 id="好吧，TDZ确实没有这么简单"><a href="#好吧，TDZ确实没有这么简单" class="headerlink" title="好吧，TDZ确实没有这么简单"></a>好吧，TDZ确实没有这么简单</h2><p>在花点时间看看上面的例子，可以很容易推断<code>let/const</code>声明并没有被提升，并且这能解释抛出了ReferenceError么？当然不能，这是一种不正确的过于简化的解释（当心一个不明确的资源夺走他）</p>
 <blockquote>
-<p>The variables are created when their containing Lexical Environment is instantiated […]</p>
+<p>估计是不要知其然不知其所以然</p>
 </blockquote>
-<p>This means whenever control flow enters a new scope (e.g. module, function or block scope), all the let/const bindings belonging to the given scope are instatiated before any code inside of the given scope is executed – in other words, let/const declarations hoist!</p>
+<p>让我们回到文章最早的那个例子，把var替换成let，看看会发生什么：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="string">'outer scope'</span>;</span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">    <span class="keyword">let</span> x = <span class="string">'inner scope'</span>;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure></p>
+<p>你能猜猜<code>console.log(x)</code>现在会打印出什么么？好吧，实际上，没有结果——这段代码将抛出<code>ReferenceError</code>因为TDZ的语义。因为<code>let/const</code>声明提升了，但是当他们在初始化前被访问的时候抛出了错误（而不是跟var一样返回undefined）。我知道前面已经解释过这个事情，但是他真的是TDZ的一个关键点非常值得我重复强调（主要是为了做一些记忆训练——重复这个段落中的重要部分直到他能够深入你的大脑！）</p>
+<p>当然，这仍然有一些过分简化，我已经做了很大的努力来平衡准确性和保持简单，用来创建一个容易记住和理解的概述。现在进入细节…</p>
+<h2 id="血淋淋的细节"><a href="#血淋淋的细节" class="headerlink" title="血淋淋的细节"></a>血淋淋的细节</h2><p>很好奇，是不？接下来让我们来深入探索TDZ。</p>
+<p>ECMAScript2015规范。在一个不规范的note中清晰的解释了let/const声明提升和TDZ语义：</p>
+<h3 id="13-2-1-Let-和-Const声明"><a href="#13-2-1-Let-和-Const声明" class="headerlink" title="13.2.1 Let 和 Const声明"></a>13.2.1 Let 和 Const声明</h3><p><em>注意</em> let和const声明定义的变量作用在当前执行上下文的<em>词法环境</em>中。变量在当他们的词法环境被初始化的时候创建，但是不能被以任何形式反问直到变量的词法绑定被执行。一个变量通过一个词法绑定和一个被赋值的初始化器 A variable defined by a LexicalBinding with an Initializer is assigned the value of its Initializer’s AssignmentExpression当词法绑定被执行的时候，变量通过词法绑定被定义，而不是当变量被创建的时候。如果一个let声明的词法绑定没有初始化器，那么这个变量在初始化绑定被执行的时候会被用<code>undefined</code>赋值。</p>
+<p><em>NOTE</em> let and const declarations define variables that are scoped to the running execution context’s LexicalEnvironment. The variables are created when their containing Lexical Environment is instantiated but may not be accessed in any way until the variable’s LexicalBinding is evaluated. A variable defined by a LexicalBinding with an Initializer is assigned the value of its Initializer’s AssignmentExpression when the LexicalBinding is evaluated, not when the variable is created. If a LexicalBinding in a let declaration does not have an Initializer the variable is assigned the value undefined when the LexicalBinding is evaluated.</p>
+<p>如果你对ECMAScript的理解不够透测，我讲用英语再翻译一下相关部分规范：</p>
 <blockquote>
-<p>[…] but may not be accessed in any way until the variable’s LexicalBinding is evaluated.</p>
+<p>变量在当他们的词法环境被初始化的时候创建[…]</p>
 </blockquote>
-<p>This is the TDZ. A given let/const-declared binding can’t be acessed in any way (read/write) until control flow has evaluated the declaration statement – that does not refer to the hoisting, but rather to where the declaration actually is in the code. It is easier to explain with examples:</p>
+<p>这意味着不管控制流何时进入新的作用域(例如：module, function或者块作用域), 所有属于给定的作用域的let/const绑定都会在任何代码执行之前被初始化 —— 换句话说，let/const声明被提升了！</p>
+<blockquote>
+<p>[…]但是不能被以任何形式反问直到变量的词法绑定被执行。</p>
+</blockquote>
+<p>这就是TDZ。一个给定的let/const声明绑定不能被以任何形式访问（读/写）知道控制流执行了声明语句 —— 这个跟提升无关，但是跟声明实际在代码中的位置有关。通过例子能简单的解释：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Accessing `x` here before control flow evaluates the `let x` statement</span></span><br><span class="line"><span class="comment">// would throw a ReferenceError due to TDZ.</span></span><br><span class="line"><span class="comment">// console.log(x);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">42</span>;</span><br><span class="line"><span class="comment">// From here on, accessing `x` is perfectly fine!</span></span><br><span class="line"><span class="built_in">console</span>.log(x);</span><br></pre></td></tr></table></figure>
-<p>And the last part:</p>
-<p>If a LexicalBinding in a let declaration does not have an Initializer the variable is assigned the value undefined when the LexicalBinding is evaluated.<br>This simply means that:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x;</span><br></pre></td></tr></table></figure></p>
-<p>Is equivalent to:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure></p>
+<p>最后的部分：</p>
+<blockquote>
+<p>如果一个let声明的词法绑定没有初始化器，那么这个变量在初始化绑定被执行的时候会被用<code>undefined</code>赋值</p>
+</blockquote>
+<p>意思是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x;</span><br></pre></td></tr></table></figure>
+<p>等价于：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure></p>
 <p>Likewise, trying to access x in any way before control flow evaluates the initializer (or the “implicit” = undefined initializer) will result in a ReferenceError, while accessing it after the control flow has evaluated the declaration will work fine – reading the x variable after the let x declaration in both samples above would return undefined.</p>
 <p>Hopefully you should have a good idea of the TDZ semantics by now, so let’s try out some slightly more advanced examples to exercise.</p>
 <p>Consider this code:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = x;</span><br></pre></td></tr></table></figure></p>
@@ -554,7 +567,7 @@ Although the">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enter-the-Temporal-Dead-Zone"><span class="nav-number">1.</span> <span class="nav-text">Enter the Temporal Dead Zone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Well-TDZ-is-not-quite-so-simple"><span class="nav-number">2.</span> <span class="nav-text">Well, TDZ is not quite so simple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-gory-details"><span class="nav-number">3.</span> <span class="nav-text">The gory details</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2-1-Let-and-Const-Declarations"><span class="nav-number">3.1.</span> <span class="nav-text">13.2.1 Let and Const Declarations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TDZ-is-everywhere"><span class="nav-number">4.</span> <span class="nav-text">TDZ is everywhere!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TDZ-is-everywhere…-Except-in-transpilers-and-engines"><span class="nav-number">5.</span> <span class="nav-text">TDZ is everywhere… Except in transpilers and engines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#And-what-about-var"><span class="nav-number">6.</span> <span class="nav-text">And what about var?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Further-reading"><span class="nav-number">7.</span> <span class="nav-text">Further reading</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#接触暂时性死区（TDZ）"><span class="nav-number">1.</span> <span class="nav-text">接触暂时性死区（TDZ）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#好吧，TDZ确实没有这么简单"><span class="nav-number">2.</span> <span class="nav-text">好吧，TDZ确实没有这么简单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#血淋淋的细节"><span class="nav-number">3.</span> <span class="nav-text">血淋淋的细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-2-1-Let-和-Const声明"><span class="nav-number">3.1.</span> <span class="nav-text">13.2.1 Let 和 Const声明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TDZ-is-everywhere"><span class="nav-number">4.</span> <span class="nav-text">TDZ is everywhere!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TDZ-is-everywhere…-Except-in-transpilers-and-engines"><span class="nav-number">5.</span> <span class="nav-text">TDZ is everywhere… Except in transpilers and engines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#And-what-about-var"><span class="nav-number">6.</span> <span class="nav-text">And what about var?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Further-reading"><span class="nav-number">7.</span> <span class="nav-text">Further reading</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
